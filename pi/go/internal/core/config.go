@@ -12,13 +12,15 @@ type Config struct {
 type VisualConfig struct {
 	//color palette here
 	// think borders, background, accent colors, etc whatever else i think up later
+	//ascii window's art(defualt will be momonga)
 }
 
 type AIConfig struct {
 	ApiKey                 string
 	MachineLearningEnabled bool
-	PythonServiceURL       string
-	InferenceTimeout       time.Duration
+
+	PythonServiceURL string
+	InferenceTimeout time.Duration
 }
 
 type HardwareConfig struct {

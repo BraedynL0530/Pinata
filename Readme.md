@@ -30,11 +30,28 @@
 - low dependencies
 - fast/efficient times
 - everything outside of the base stuff is optional(ml, esp, Ai agent stuff)
-- custom packet manager
+- custom package manager
 
 # Notes for futer read me:
-## dont have touchscreen? thats fine just plug a mouse up instead!
-## dont want camera and machine learning? no wories it works fine this is modular after all
-## feel free to adjust 3d modeling!
-## dont want any machine learning? just turn it off with this flag!
-## want to change something? change it with insert easy way to change it
+
+
+* dont have touchscreen? thats fine just plug a mouse up instead!
+* dont want camera and machine learning? no wories it works fine this is modular after all
+* feel free to adjust 3d modeling!
+* dont want any machine learning? just turn it off with this flag!
+* want to change something? change it with insert easy way to change it
+
+#Plugin idea/package manager:
+
+{
+    "name": "pinata-ai-vision",
+    "version": "1.0.4",
+    "entrypoint": "main.py",
+    "dependencies": {
+    "pip": ["opencv-python", "numpy", "torch"],
+    "npm": ["canvas-confetti"],
+    "pinata_core": ">=1.0.0"
+    }
+}
+
+stuff like that
