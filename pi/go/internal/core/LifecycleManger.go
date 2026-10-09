@@ -11,18 +11,18 @@ import (
 
 type LifeCycleManager struct {
 	wg   sync.WaitGroup
-	quit chan struct{}
+	Quit chan struct{}
 }
 
 func NewLifeCycleManager() *LifeCycleManager {
-	return &LifeCycleManager{quit: make(chan struct{})}
+	return &LifeCycleManager{Quit: make(chan struct{})}
 }
 
 func (m *LifeCycleManager) Go(fn func(quit <-chan struct{})) {
 	m.wg.Add(1)
 	go func() {
 		defer m.wg.Done()
-		fn(m.quit)
+		fn(m.Quit)
 	}()
 }
 
@@ -33,7 +33,7 @@ func (m *LifeCycleManager) Run() {
 
 	sig := <-sigChan
 	fmt.Printf("Received signal: %v\n", sig)
-	close(m.quit) //says stop
+	close(m.Quit) //says stop
 
 	done := make(chan struct{})
 	go func() {
@@ -45,6 +45,6 @@ func (m *LifeCycleManager) Run() {
 	case <-done:
 		fmt.Println("everything finshed closed clean")
 	case <-time.After(10 * time.Second):
-		fmt.Println("Timed out force quit later")
+		fmt.Println("Timed out force Quit later")
 	}
 }

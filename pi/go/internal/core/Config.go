@@ -9,6 +9,8 @@ type Config struct {
 	Network  NetworkConfig
 }
 
+type FileExist bool
+
 type VisualConfig struct {
 	//color palette here
 	// think borders, background, accent colors, etc whatever else i think up later
@@ -43,3 +45,5 @@ func LoadConfig(path string) (*Config, error) {
 	//if config detected or pointed at idk
 	return nil, nil // temp
 }
+
+func (c *Config) SearchConfig(path string) (*Config, error) { return nil, nil }
