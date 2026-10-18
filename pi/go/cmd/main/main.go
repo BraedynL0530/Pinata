@@ -28,6 +28,9 @@ func handleShutdown(manager *core.LifeCycleManager) {
 		for {
 			select {
 			case <-quit:
+				//quit in setup gui
+				//save workspace location if possible
+				//save config
 				return // polite kill to each important/all apps
 			case <-ticker.C:
 				//force kill

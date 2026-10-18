@@ -12,6 +12,10 @@ type Config struct {
 type FileExist bool
 
 type VisualConfig struct {
+	PrimaryColor string // temp may need to change value
+	AccentColor  string
+	TriteryColor string //bs for now
+
 	//color palette here
 	// think borders, background, accent colors, etc whatever else i think up later
 	//ascii window's art(defualt will be momonga)
@@ -46,4 +50,4 @@ func LoadConfig(path string) (*Config, error) {
 	return nil, nil // temp
 }
 
-func (c *Config) SearchConfig(path string) (*Config, error) { return nil, nil }
+func (c *Config) SearchConfig(path string) (*Config, error) { return nil, nil } // search for USER config

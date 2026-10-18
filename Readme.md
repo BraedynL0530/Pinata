@@ -55,3 +55,10 @@
 }
 
 stuff like that
+
+
+TEMP GUI NOTES:
+switch work spaces has an animation,
+on right side center aligned,
+uses i3 titling on app luanching workspace, maybe make multiple windows to do so?
+decied if perstitant storage, and also find a way to store where left off so i can make a save/restore function
