@@ -41,7 +41,7 @@
 * dont want any machine learning? just turn it off with this flag!
 * want to change something? change it with insert easy way to change it
 
-#Plugin idea/package manager:
+# Plugin idea/package manager:
 
 {
     "name": "pinata-ai-vision",
