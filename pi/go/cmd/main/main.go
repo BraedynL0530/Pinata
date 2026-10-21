@@ -38,3 +38,10 @@ func handleShutdown(manager *core.LifeCycleManager) {
 		}
 	})
 }
+
+func InitWeather(endpoint string) (results string, err *error) {
+	return "", nil // temp
+}
+func UpdateWeather(endpoint string) (results string, err *error) {
+	return "", nil // use Open-Meteo API
+}

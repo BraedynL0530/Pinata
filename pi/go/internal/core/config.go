@@ -1,6 +1,9 @@
 package core
 
-import "time"
+import (
+	"image/color"
+	"time"
+)
 
 type Config struct {
 	Visual   VisualConfig
@@ -12,10 +15,10 @@ type Config struct {
 type FileExist bool
 
 type VisualConfig struct {
-	PrimaryColor string // temp may need to change value
-	AccentColor  string
-	TriteryColor string //bs for now
-	imagePath    string //"assets/BG.webp" for now!
+	PrimaryColor *color.Color //changed value
+	AccentColor  *color.Color
+	TriteryColor *color.Color //may remove
+	ImagePath    string       //"assets/BG.webp" for now!
 
 	//color palette here
 	// think borders, background, accent colors, etc whatever else i think up later
@@ -46,11 +49,14 @@ func NewConfig() *Config { // default*
 	}
 }
 
-func LoadConfig(path string) *Config {
+func LoadConfig(path string) (config *Config, err error) {
 
+	if err != nil {
+		return nil, err
+	}
 	return &Config{
 		Visual: VisualConfig{ // current real values
-			imagePath: "TEMP!/assets/BG.webp",
+			ImagePath: "TEMP!/assets/BG.webp",
 		},
 		AI: AIConfig{ // ALL TEMP VALUES
 			ApiKey:                 "",
@@ -65,7 +71,7 @@ func LoadConfig(path string) *Config {
 		Network: NetworkConfig{
 			PCCommPort: 0, // who wouldve guessed temp
 		},
-	}
+	}, nil
 }
 
 func (c *Config) SearchConfig(path string) (*Config, error) { return nil, nil } // search for USER config

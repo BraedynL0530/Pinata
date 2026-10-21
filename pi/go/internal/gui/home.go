@@ -4,25 +4,69 @@ import (
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
+	"github.com/BraedynL0530/Pinata/internal/core"
 )
 
-type Home struct {
+type HomeWorkspace struct {
 	Container *fyne.Container
 	bg        *canvas.Image
+	cfg       *core.Config
+}
+type App struct {
+	Container *fyne.Container // possibly widget instead or even window!
+	icon      *canvas.Image
+	OnOpen    func()
+	OnClose   func()
+	cfg       *core.Config // for border color and such
 }
 
-func NewHome() *Home {
-	defualtImg := canvas.NewImageFromFile(core.) // change
-	defualtImg.FillMode = canvas.ImageFillContain
-	c := container.NewVBox()
-	return &Home{
+func NewHome(cfg *core.Config) *HomeWorkspace {
+	defaultImg := canvas.NewImageFromFile(cfg.Visual.ImagePath) // change
+	defaultImg.FillMode = canvas.ImageFillContain
+
+	ui := container.NewVBox(
+	// app launcher
+	// terminal⠀⠀⠀⠀⠀⠀possible widget possible canvas thingy
+	//⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡀⠀⠀⠀⠀⠀⠀⣴⠋⠀⠀⠀⠀⠀⠀⢀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+	//⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢳⡄⡀⠄⠠⠀⢸⡏⠀⠄⠠⠀⡀⢠⡞⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+	//⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢤⣀⠀⢀⠠⠐⠀⢁⠀⠛⠀⠠⠐⠈⠈⡁⠄⠂⠐⢀⢠⡟⢀⠠⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⡶⠟⠛⠛⠻⠿⣶⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀
+	//⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡀⠻⡆⡀⠄⠐⠈⣠⣴⡾⠿⠛⠛⠿⢶⣄⠀⠂⠁⡀⢘⠡⠀⠠⠀⣡⡶⠋⠁⠀⠀⠀⠀⠀⠀⠀⠀⣼⠃⠀⠀⠀⠀⠀⠀⠀⠙⢷⣄⠀⠀⠀⠀⠀⠀⠀
+	//⠀⠀⠀⠀⠀⢀⣄⣀⠀⠂⠠⠀⠡⠀⠄⢂⣽⠟⠁⠀⠀⠀⠀⠀⠀⠙⣷⡌⠀⠄⠀⠄⠐⢀⢱⠟⠀⡐⢀⣀⠀⠀⠀⠀⠀⠀⢐⡏⠀⠀⢀⡀⠀⠀⠀⠀⠀⠀⢻⣆⠀⠀⠀⠀⠀⠀
+	//⠀⠀⠀⠀⠀⠀⠉⠛⢷⡌⠀⡈⠠⠐⠀⣾⠏⠀⠀⠀⢀⡀⠀⠀⠀⠀⢘⣷⠐⠀⡁⠐⠈⠀⡀⠄⠂⢀⠛⠁⠀⠀⠀⠀⠀⠀⢸⡇⠀⠀⢸⡇⢀⠀⠀⠀⠀⠀⠘⣿⡀⠀⠀⠀⠀⠀
+	//⠀⠀⠀⠀⠀⠠⠈⠠⠀⡙⠀⠄⠐⢀⢸⡿⠀⠀⠀⠀⢸⣷⠀⠀⠀⠀⠰⣿⠀⠂⠀⠂⢁⠠⠀⠄⣂⣠⡀⡂⠁⠀⠀⠀⠀⠀⡿⠀⠀⠀⣿⠁⠠⠐⠀⠀⠀⠀⢀⣿⡇⠀⠀⠀⠀⠀
+	//⠀⠀⠀⠀⠐⢀⠈⠠⠀⠄⠂⡀⢁⠠⢸⡇⠀⠀⠀⠀⢸⣿⠀⠀⠀⠀⠀⢿⡔⢈⣠⣵⣶⠾⠿⠟⠛⠛⠛⠛⠛⠛⠿⠶⣦⡜⠁⠀⠀⣰⡟⠀⠂⡀⢁⠀⠀⠀⢸⣿⠀⠀⠀⠀⠀⠀
+	//⠀⠀⠠⠶⠷⠶⣦⣥⣀⠂⠠⠀⠄⠀⢽⡇⠀⠀⠠⠈⠀⢿⣆⠀⠀⠀⠀⠈⠻⠌⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠰⠟⢿⣟⠛⠃⠀⠀⠀⢠⡿⠃⠀⠀⠀⠀⠀⠀
+	//⠀⠀⠀⠄⢀⠂⠀⠄⢉⠡⠐⠀⠂⠁⠸⣿⡀⠀⠐⡼⠶⠛⣿⡷⠦⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠓⠀⠀⢀⣴⠟⠁⠀⠀⠀⠀⠀⠀⠀
+	//⠀⠀⠂⢈⠀⡀⠁⠄⠠⠀⠐⠈⢀⠈⡀⠻⣧⡀⠀⠄⠐⠘⠏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢴⣞⡋⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀
+	//⠀⢀⠈⡀⠠⠀⠂⠐⢀⠈⡀⢁⠠⠀⠄⠐⠈⠻⣦⣄⣀⠈⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠻⣦⡀⠀⠀⠀⠀⠀⠀⠀⠀
+	//⠀⠀⠄⠠⣐⣀⡁⢈⠀⠠⠀⠄⠠⠐⠀⡈⢀⠁⢀⣽⠟⠙⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢻⡄⠀⠀⠀⠀⠀⠀⠀
+	//⠀⠾⠛⠛⠋⠙⠛⠂⢀⠂⠐⠀⠂⡀⢁⠀⠄⣠⡿⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠰⠦⠄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⣿⣀⣤⣤⣀⡀⠀⠀
+	//⠀⠀⡈⠠⠈⠠⠈⠠⠀⢄⡵⠖⠳⠶⣤⣄⣲⡟⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠰⠖⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣀⣀⡀⠀⠀⠀⠀⠀⠀⠀⠐⠿⠋⠁⠀⠈⠛⠆⠀
+	//⠀⠀⠄⠂⠐⢀⠈⠠⠐⠈⠀⠀⠀⠀⠀⠈⠉⠃⠀⠀⠀⠀⠀⠀⠀⢀⣤⣶⣶⠾⠶⣦⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣾⡿⠋⠉⠉⠙⠻⣶⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+	//⠀⠀⠐⠀⡁⣠⣐⣀⠂⠀⠀⢀⢀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣰⣿⠟⠁⠀⠀⠀⠀⣹⣿⡄⠀⠀⠠⠐⠀⡀⠀⠀⣿⣿⡅⠀⠀⣀⣀⣀⣸⣿⡆⠀⠀⠀⠀⠀⢀⣤⣤⣤⣄⠀⠀
+	//⠀⠀⢠⣵⠟⠋⠉⠁⠂⠰⠚⠉⠉⠛⠛⠃⠀⠀⠀⠀⠀⠀⠀⠀⢻⣧⣄⣠⣶⠿⡶⠾⢛⣿⡇⠀⡈⠠⠐⠀⠄⠂⠀⢻⣿⣟⠻⠛⠛⠛⢛⣹⣿⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠻⣦
+	//⠀⠀⠉⠀⡀⠂⠁⡈⠠⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠀⡀⠙⠿⣿⣤⣴⣶⡾⠟⠋⠀⠀⠀⠀⠂⠐⠀⠀⠀⠀⠙⠻⠿⣶⣶⡾⠿⣛⡁⠠⡀⠄⢀⠀⠀⠀⠀⠀⠀⠀⠀⠈
+	//⠀⠀⠀⠀⠀⠂⠁⡀⠐⢀⠀⢀⣠⡶⠟⠛⠀⠀⠀⠠⣸⡟⣱⡖⢰⡎⣰⠆⠀⠀⠀⠀⠀⠀⠀⠠⣦⣠⣾⣇⣠⡄⠀⠀⠀⠀⠀⠀⠀⠀⣾⠋⣠⡿⢃⡾⣰⠀⠐⠛⠛⠷⣦⡀⠀⠀
+	//⠀⠀⠀⠀⠈⠀⢁⣤⠆⠠⢠⠞⠁⠀⠀⠀⠀⠀⠀⠘⠟⠀⡉⢐⠈⠄⠌⠂⠀⠀⠀⠀⠀⠀⢀⣠⣌⢉⣀⢉⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢂⠈⠡⠘⢁⠡⠀⠀⠀⠀⠀⠈⠻⠆⠀
+	//⠀⠀⠀⠀⠀⣸⠟⠁⠐⢀⠁⡀⠀⠀⣠⡶⠟⠃⠀⠀⠂⠁⠄⠂⠐⠀⠂⠀⠀⠀⠀⠀⠀⢀⣿⠉⣿⡟⣿⠍⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠀⠈⠀⠀⠀⠀⠲⣦⡄⠀⠀⠀⠀
+	//⠀⠀⠀⠀⠀⠛⠀⠈⠠⠀⠄⢀⠂⠀⠟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣸⡇⠀⠉⠀⠛⣷⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣰⡆⠀⠀⠘⢷⠀⠀⠀⠀
+	//⠀⠀⠀⠀⠀⠀⠀⠀⠀⠐⣸⠇⠀⡁⢈⠠⠐⠀⠻⢷⣤⣀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠠⣿⠋⠀⠀⠀⠀⠀⣽⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣼⠟⠁⠀⠀⠀⠀⠀⠀⠀⠀
+	//⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⠀⠁⢀⠠⠀⠄⠂⠐⠀⡈⣹⡏⠀⠀⠀⠀⠀⠀⠀⠀⠀⢻⡆⠀⠀⠀⠀⣰⡟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢻⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀
+	//⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠀⠀⠀⠀⢸⡇⠀⡁⠄⠀⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠿⠁⠀⠀⠀⢸⡿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⡯
+	//weather widget
+	//app selector
+	)
+
+	c := container.NewStack(defaultImg, ui)
+	return &HomeWorkspace{
 		Container: c,
-		bg:        defualtImg,
+		bg:        defaultImg,
+		cfg:       cfg,
 	}
 
 }
-func (home *Home) SetBG(assetPath string) *canvas.Image {
-	img := canvas.NewImageFromFile(assetPath)
-	img.FillMode = canvas.ImageFillContain
-	return img
+func (home *HomeWorkspace) SetBG(assetPath string) {
+	home.cfg.Visual.ImagePath = assetPath // Update your core configuration state
+	home.bg.File = assetPath              // Change the target file path pointer
+	home.bg.Refresh()
 }
