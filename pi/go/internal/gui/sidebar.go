@@ -5,28 +5,54 @@ import (
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/canvas"
+	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/widget"
 	"github.com/BraedynL0530/Pinata/internal/core"
 )
 
-type sidebar struct {
-	btn *widget.Button
-	Id  int
-}
-
-func Sidebar(workspaces *WorkspaceManager, cfg *core.Config) fyne.CanvasObject {
-	rect := canvas.NewRectangle(*cfg.Visual.PrimaryColor)
+func Sidebar(workspaces *WorkspaceManager, cfg *core.Config) *fyne.Container {
+	rect := canvas.NewRectangle(*cfg.Visual.AccentColor)
 	rect.CornerRadius = 6
+	btnHolder := container.NewVBox()
+	var bulletIcons []*canvas.Circle
 
 	total := workspaces.TotalWorkspaces
 	for workspace := range total {
-		invisibleBtn := widget.NewButton("", onClick) // wanna make these circles
-		invisibleBtn.Importance = widget.LowImportance
-		sidebar := &sidebar{
-			btn: invisibleBtn,
-			Id:  workspace,
+		index := workspace
+
+		icon := canvas.NewCircle(*cfg.Visual.TertiaryColor)
+		if index == workspaces.CurrentIndex {
+			icon.StrokeColor = *cfg.Visual.PrimaryColor
+			icon.StrokeWidth = 4.0
+		} else {
+			icon.StrokeColor = color.White
+			icon.StrokeWidth = 1.0
+		}
+		bulletIcons = append(bulletIcons, icon)
+
+		btn := widget.NewButton("", func() {
+			workspaces.SetWorkspace(index)
+		})
+		btn.Importance = widget.LowImportance
+
+		trueButton := container.NewStack(icon, btn)
+		btnHolder.Add(trueButton)
+	}
+
+	workspaces.OnChanged = func(activeIndex int) {
+		for i, circle := range bulletIcons {
+			if i == activeIndex {
+				circle.StrokeColor = *cfg.Visual.PrimaryColor
+				circle.StrokeWidth = 4.0
+			} else {
+				circle.StrokeWidth = 1.0
+			}
+			circle.Refresh()
 		}
 	}
 
-	return dih
+	ui := container.NewStack(btnHolder, rect)
+	return ui
 }
+
+//Todo: add a swipe animation based on direction to go up or down instead of selecting circles!

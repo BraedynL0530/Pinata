@@ -16,6 +16,7 @@ func setupGui(cfg *core.Config) {
 	w.Show() // TEMP SO ERROR SHUTS UP
 	home := NewHome(cfg)
 	allWorkspaces := []*fyne.Container{home.Container}
-	workspaces := make([]*fyne.Container, len(allWorkspaces))
-	NewWorkspaceManager(workspaces)
+	workspacemanager := NewWorkspaceManager(allWorkspaces)
+
+	sidebar := Sidebar(workspacemanager, cfg)
 }

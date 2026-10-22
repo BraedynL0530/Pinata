@@ -15,14 +15,15 @@ type Config struct {
 type FileExist bool
 
 type VisualConfig struct {
-	PrimaryColor *color.Color //changed value
-	AccentColor  *color.Color
-	TriteryColor *color.Color //may remove
-	ImagePath    string       //"assets/BG.webp" for now!
+	PrimaryColor   *color.Color //default light borderline violet blue
+	SecondaryColor *color.Color //default pastel pink
+	TertiaryColor  *color.Color //default black(or dark grey but basically black
+	AccentColor    *color.Color // light grey just to contrast bgs and such
+	ImagePath      string       //"assets/BG.webp" for now!
 
 	//color palette here
 	// think borders, background, accent colors, etc whatever else i think up later
-	//ascii window's art(defualt will be momonga)
+	//ascii window's art(default will be momonga)
 }
 
 type AIConfig struct {
