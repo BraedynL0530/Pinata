@@ -13,7 +13,7 @@ type Config struct {
 	Extra    Additional
 }
 
-type FileExist bool
+type FileExist bool // oh yeah ts is for config loading via json
 
 type VisualConfig struct {
 	PrimaryColor   *color.Color //default light borderline violet blue

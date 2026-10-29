@@ -3,12 +3,18 @@ package gui
 import (
 	"image/color"
 
+	hook "github.com/robotn/gohook"
+
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/widget"
 	"github.com/BraedynL0530/Pinata/internal/core"
 )
+
+type swipe struct {
+	// may not use tbd...
+}
 
 func Sidebar(workspaces *WorkspaceManager, cfg *core.Config) *fyne.Container {
 	rect := canvas.NewRectangle(*cfg.Visual.AccentColor)
@@ -56,4 +62,8 @@ func Sidebar(workspaces *WorkspaceManager, cfg *core.Config) *fyne.Container {
 	return ui
 }
 
-//Todo: add a swipe workpace change based on direction to go up or down instead of selecting circles!
+func SwipeSearch(workspaces *WorkspaceManager, cfg *core.Config) { // autocomplete but likely wont need cfg
+	evChan := hook.Start()
+	defer hook.End()
+
+}

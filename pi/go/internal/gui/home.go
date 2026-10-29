@@ -13,7 +13,7 @@ type HomeWorkspace struct {
 	cfg       *core.Config
 }
 type App struct {
-	Container *fyne.Container // possibly widget instead or even window!
+	Container *fyne.Container // possibly widget instead or even window(im leaning towards window
 	icon      *canvas.Image
 	OnOpen    func()
 	OnClose   func()
@@ -24,9 +24,9 @@ func NewHome(cfg *core.Config) *HomeWorkspace {
 	defaultImg := canvas.NewImageFromFile(cfg.Visual.ImagePath) // change
 	defaultImg.FillMode = canvas.ImageFillContain
 
-	ui := container.NewVBox(
+	ui := container.NewVBox( // may need to change
 	// app launcher
-	// terminal⠀⠀⠀⠀⠀⠀possible widget possible canvas thingy or just make a luancher 4 it
+	// no more terminal, that can be part of app launcher for better tilling
 	//⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡀⠀⠀⠀⠀⠀⠀⣴⠋⠀⠀⠀⠀⠀⠀⢀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 	//⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢳⡄⡀⠄⠠⠀⢸⡏⠀⠄⠠⠀⡀⢠⡞⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 	//⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢤⣀⠀⢀⠠⠐⠀⢁⠀⠛⠀⠠⠐⠈⠈⡁⠄⠂⠐⢀⢠⡟⢀⠠⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⡶⠟⠛⠛⠻⠿⣶⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -69,4 +69,8 @@ func (home *HomeWorkspace) SetBG(assetPath string) {
 	home.cfg.Visual.ImagePath = assetPath
 	home.bg.File = assetPath
 	home.bg.Refresh()
+}
+
+func (a *App) RegisterApp() {
+	//blegh
 }

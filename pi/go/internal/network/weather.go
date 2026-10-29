@@ -53,7 +53,7 @@ func GetWeather(cfg *core.Config, location *location) *Weather { // add error ha
 	lon := location.lon
 	var unit string
 
-	//TODO: add auth
+	//TODO: add auth/finish this file
 
 	if cfg.Extra.MetricSystem == true {
 		unit = "celsius"
@@ -80,15 +80,14 @@ func GetWeather(cfg *core.Config, location *location) *Weather { // add error ha
 		City:          "", //  use getLatLon or seperate script
 		Temperature:   weatherResp.Temperature,
 		Precipitation: weatherResp.Precipitation,
-		Skys:          "",    // if prectiation then not cloudy or read api
+		Skys:          "",    // if precipitation, then not cloudy or read api
 		isDay:         false, //time stuff
 	}
 }
 
 func UpdateWeather(cfg *core.Config, location *location) *Weather {
 	return &Weather{}
-	//either make this scheduled every hour or so OR remove this func!
+	//either make this scheduled every hour or so OR remove this func
 }
 
-//pretty good i suppose!
-//HOW LONG IS THIS GOING TO TAKEEEE
+// God i hate code analysis when im just trying to push my incomplete code
