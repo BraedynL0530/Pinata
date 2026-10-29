@@ -2,6 +2,7 @@ package gui
 
 import (
 	"image/color"
+	"time"
 
 	hook "github.com/robotn/gohook"
 
@@ -13,10 +14,12 @@ import (
 )
 
 type swipe struct {
-	// may not use tbd...
+	isDragging bool
+	isUp       bool
+	buffer     time.Duration // im a moron
 }
 
-func Sidebar(workspaces *WorkspaceManager, cfg *core.Config) *fyne.Container {
+func Sidebar(workspaces *WorkspaceManager, cfg *core.Config, swipe *swipe) *fyne.Container {
 	rect := canvas.NewRectangle(*cfg.Visual.AccentColor)
 	rect.CornerRadius = 6
 	btnHolder := container.NewVBox()
@@ -58,12 +61,40 @@ func Sidebar(workspaces *WorkspaceManager, cfg *core.Config) *fyne.Container {
 		}
 	}
 
+	if swipe.isUp && swipe.isDragging == true {
+		workspaces.PrevWorkspace()
+	}
+	if swipe.isDragging == true && swipe.isUp != true {
+		workspaces.NextWorkspace()
+	}
 	ui := container.NewStack(btnHolder, rect)
 	return ui
 }
 
-func SwipeSearch(workspaces *WorkspaceManager, cfg *core.Config) { // autocomplete but likely wont need cfg
+func NewSwipe() *swipe {
+	Swipe := &swipe{
+		isDragging: false,
+		isUp:       false,
+		buffer:     1000,
+	}
+	return Swipe
+}
+
+func SwipeSearch(workspaces *WorkspaceManager, swipe *swipe) {
 	evChan := hook.Start()
 	defer hook.End()
+	// useless CLANKER gosh i HATE ai especially GPT and lil G
+
+	swipe.buffer = 400 * time.Millisecond
+	for ev := range evChan {
+		if ev.Kind == hook.MouseDown {
+			swipe.isDragging = true //temp, channel isn't gonna work
+		}
+		if ev.Kind == hook.MouseUp {
+			swipe.isDragging = false
+		}
+	}
 
 }
+
+//gonna stop here for the day!
