@@ -10,6 +10,7 @@ type Config struct {
 	AI       AIConfig
 	Hardware HardwareConfig
 	Network  NetworkConfig
+	Extra    Additional
 }
 
 type FileExist bool
@@ -43,18 +44,12 @@ type NetworkConfig struct {
 	PCCommPort int
 }
 
-func NewConfig() *Config { // default*
-	return &Config{
-		// add more stuff later add default config here, this should only run IF not already one
-		// Maybe it makes the file for user as well?
-	}
+type Additional struct {
+	Location     string // optional or else na
+	MetricSystem bool   //true = metric false is freedom units
 }
 
-func LoadConfig(path string) (config *Config, err error) {
-
-	if err != nil {
-		return nil, err
-	}
+func NewConfig() *Config { // default*
 	return &Config{
 		Visual: VisualConfig{ // current real values
 			ImagePath: "TEMP!/assets/BG.webp",
@@ -70,8 +65,22 @@ func LoadConfig(path string) (config *Config, err error) {
 			RoomSensorsLocal: true,
 		},
 		Network: NetworkConfig{
-			PCCommPort: 0, // who wouldve guessed temp
+			PCCommPort: 0, // who would've guessed temp
 		},
+		Extra: Additional{ // am i stupid why is this a bug?
+			Location:     "na",
+			MetricSystem: true,
+		},
+	}
+}
+
+func LoadConfig(path string) (config *Config, err error) {
+
+	if err != nil {
+		return nil, err
+	}
+	return &Config{
+		//temp
 	}, nil
 }
 

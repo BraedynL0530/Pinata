@@ -48,6 +48,7 @@ func Sidebar(workspaces *WorkspaceManager, cfg *core.Config) *fyne.Container {
 				circle.StrokeWidth = 1.0
 			}
 			circle.Refresh()
+			//animation here
 		}
 	}
 
@@ -55,4 +56,4 @@ func Sidebar(workspaces *WorkspaceManager, cfg *core.Config) *fyne.Container {
 	return ui
 }
 
-//Todo: add a swipe animation based on direction to go up or down instead of selecting circles!
+//Todo: add a swipe workpace change based on direction to go up or down instead of selecting circles!

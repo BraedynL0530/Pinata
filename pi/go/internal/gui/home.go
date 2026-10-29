@@ -26,7 +26,7 @@ func NewHome(cfg *core.Config) *HomeWorkspace {
 
 	ui := container.NewVBox(
 	// app launcher
-	// terminal⠀⠀⠀⠀⠀⠀possible widget possible canvas thingy
+	// terminal⠀⠀⠀⠀⠀⠀possible widget possible canvas thingy or just make a luancher 4 it
 	//⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡀⠀⠀⠀⠀⠀⠀⣴⠋⠀⠀⠀⠀⠀⠀⢀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 	//⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢳⡄⡀⠄⠠⠀⢸⡏⠀⠄⠠⠀⡀⢠⡞⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 	//⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢤⣀⠀⢀⠠⠐⠀⢁⠀⠛⠀⠠⠐⠈⠈⡁⠄⠂⠐⢀⢠⡟⢀⠠⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⡶⠟⠛⠛⠻⠿⣶⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -66,7 +66,7 @@ func NewHome(cfg *core.Config) *HomeWorkspace {
 
 }
 func (home *HomeWorkspace) SetBG(assetPath string) {
-	home.cfg.Visual.ImagePath = assetPath // Update your core configuration state
-	home.bg.File = assetPath              // Change the target file path pointer
+	home.cfg.Visual.ImagePath = assetPath
+	home.bg.File = assetPath
 	home.bg.Refresh()
 }
